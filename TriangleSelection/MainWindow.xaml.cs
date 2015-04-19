@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
@@ -22,22 +23,24 @@ namespace TriangleSelection
     public partial class MainWindow : Window
     {
         private bool _drag;
-        private Point _a;
+        private readonly Point _a;
         private Vector _v0;
         private Vector _v1;
-        private double _d00;
-        private double _d01;
-        private double _d11;
-        private double _invDenom;
+        private readonly double _d00;
+        private readonly double _d01;
+        private readonly double _d11;
+        private readonly double _invDenom;
+        private Point _b;
+        private Point _c;
 
         public MainWindow()
         {
             InitializeComponent();
             _a = Triangle.Points[0];
-            var b = Triangle.Points[1];
-            var c = Triangle.Points[2];
-            _v0 = b - _a;
-            _v1 = c - _a;
+            _b = Triangle.Points[1];
+            _c = Triangle.Points[2];
+            _v0 = _b - _a;
+            _v1 = _c - _a;
             _d00 = Vector.Multiply(_v0, _v0);
             _d01 = Vector.Multiply(_v0, _v1);
             _d11 = Vector.Multiply(_v1, _v1);
@@ -57,35 +60,89 @@ namespace TriangleSelection
 
         private void Ball_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            _drag = false;
+            //_drag = false;
         }
 
-        private void Ball_OnMouseMove(object sender, MouseEventArgs e)
+        private void Container_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            //DragIt(e);
+            //e.Handled = true;
+        }
+
+        private void DragIt(MouseEventArgs e)
         {
             if (!_drag) return;
             var x = e.GetPosition(Container).X;
             var y = e.GetPosition(Container).Y;
+            var ballX = Canvas.GetLeft(Ball) + 15;
+            var ballY = Canvas.GetTop(Ball) + 15;
             var p = new Point(x, y);
-            var v2 = p - _a;
+            var ballPoint = new Point(ballX, ballY);
+            double u;
+            double v;
+            double ballU;
+            double ballV;
             
-            var d02 = Vector.Multiply(_v0, v2);
-            var d12 = Vector.Multiply(_v1, v2);
+            GetUV(p, out u, out v);
+            GetUV(ballPoint, out ballU, out ballV);
 
-            var u = (_d11 * d02 - _d01 * d12) * _invDenom;
-            var v = (_d00 * d12 - _d01 * d02) * _invDenom;
+            vLabel.Content = ballV;
+            uLabel.Content = ballU;
 
-            vLabel.Content = v;
-            uLabel.Content = u;
-
-            Ball.SetValue(Canvas.LeftProperty, x - 15);
-            Ball.SetValue(Canvas.TopProperty, y - 15);
-            
+            if (u < 0 || v < 0 || u + v > 1)
+            {
+                if ((u + v) > 1)
+                {
+                    Ball.SetValue(Canvas.LeftProperty, x - 15);
+                }
+                else if (u<0 && v<0)
+                {
+                    return;
+                }
+                else if (u < 0)
+                {
+                    if (ballV < Double.Epsilon) return;
+                    Ball.SetValue(Canvas.TopProperty, y - 15);
+                    var x1 = y*_v1.X/_v1.Y + _b.X + 4.999;
+                    Ball.SetValue(Canvas.LeftProperty, x1);
+                }
+                else if (v < 0)
+                {
+                    if (ballU < Double.Epsilon) return;
+                    Ball.SetValue(Canvas.TopProperty, y - 15);
+                    var x1 = y * _v0.X / _v0.Y +_c.X - 34.99;
+                    Ball.SetValue(Canvas.LeftProperty, x1);
+                }
+            }
+            else
+            {
+                Ball.SetValue(Canvas.LeftProperty, x - 15);
+                Ball.SetValue(Canvas.TopProperty, y - 15);
+            }
             mouseTopLabel.Content = y;
             mouseLeftLabel.Content = x;
         }
 
+        private void GetUV(Point p, out double u, out double v)
+        {
+            var v2 = p - _a;
 
-    
 
+            var d02 = Vector.Multiply(_v0, v2);
+            var d12 = Vector.Multiply(_v1, v2);
+
+            u = (_d11*d02 - _d01*d12)*_invDenom;
+            v = (_d00*d12 - _d01*d02)*_invDenom;
+        }
+
+        private void MainWindow_OnMouseMove(object sender, MouseEventArgs e)
+        {
+            DragIt(e);
+        }
+
+        private void MainWindow_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            _drag = false;
+        }
     }
 }

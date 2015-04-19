@@ -1,10 +1,10 @@
-﻿<Window x:Class="TriangleSelection.MainWindow"
+﻿<Window x:Class="TriangleSelection.MainWindow" MouseMove="MainWindow_OnMouseMove" MouseLeftButtonUp="MainWindow_OnMouseLeftButtonUp"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-        Title="MainWindow" Height="350" Width="525">
-    <Canvas Name="Container">
+        Title="MainWindow" Height="350" Width="797.881">
+    <Canvas Name="Container" MouseMove="Container_OnMouseMove">
         <Polygon x:Name="Triangle"
             Points="200,100 100,225 300,225 200,100"
             
@@ -14,16 +14,14 @@
                 <SolidColorBrush Color="Red" Opacity="0.4"/>
             </Polygon.Fill>
         </Polygon>
-        <Ellipse x:Name="Ball" MouseMove="Ball_OnMouseMove" 
+        <Ellipse x:Name="Ball"
                  MouseLeftButtonDown="Ball_OnMouseLeftButtonDown" 
                  MouseLeftButtonUp="Ball_OnMouseLeftButtonUp"  
           Fill="#FFFFFF00"
           Height="30"
           Width="30"
-          Canvas.Left="188"
-          Canvas.Top="153"
           StrokeThickness="1"
-          Stroke="#FF0000FF" RenderTransformOrigin="0.389,-4.256"  >
+          Stroke="#FF0000FF" RenderTransformOrigin="0.389,-4.256" Canvas.Left="184" Canvas.Top="150"  >
             <!--<i:Interaction.Behaviors>
                 <ei:MouseDragElementBehavior Dragging="MouseDragElementBehavior_OnDragging" DragFinished="MouseDragElementBehavior_OnDragFinished"/>
             </i:Interaction.Behaviors>-->
