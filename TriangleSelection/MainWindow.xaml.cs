@@ -91,6 +91,25 @@ namespace TriangleSelection
 
             if (u < 0 || v < 0 || u + v > 1)
             {
+                if (p.Y <= _a.Y)
+                {
+                    Ball.SetValue(Canvas.LeftProperty, _a.X - 15);
+                    Ball.SetValue(Canvas.TopProperty, _a.Y - 15);
+                    return;
+                }
+                if (p.Y >= _c.Y && p.X >= _c.X)
+                {
+                    Ball.SetValue(Canvas.LeftProperty, _c.X - 15);
+                    Ball.SetValue(Canvas.TopProperty, _c.Y - 15);
+                    return;
+                }
+                if (p.Y >= _b.Y && p.X <= _b.X)
+                {
+                    Ball.SetValue(Canvas.LeftProperty, _b.X - 15);
+                    Ball.SetValue(Canvas.TopProperty, _b.Y - 15);
+                    return;
+                }
+
                 if ((u + v) > 1)
                 {
                     Ball.SetValue(Canvas.LeftProperty, x - 15);
@@ -101,14 +120,14 @@ namespace TriangleSelection
                 }
                 else if (u < 0)
                 {
-                    if (ballV < Double.Epsilon) return;
+                    //if (ballV < Double.Epsilon) return;
                     Ball.SetValue(Canvas.TopProperty, y - 15);
                     var x1 = y*_v1.X/_v1.Y + _b.X + 4.999;
                     Ball.SetValue(Canvas.LeftProperty, x1);
                 }
                 else if (v < 0)
                 {
-                    if (ballU < Double.Epsilon) return;
+                    //if (ballU < Double.Epsilon) return;
                     Ball.SetValue(Canvas.TopProperty, y - 15);
                     var x1 = y * _v0.X / _v0.Y +_c.X - 34.99;
                     Ball.SetValue(Canvas.LeftProperty, x1);
