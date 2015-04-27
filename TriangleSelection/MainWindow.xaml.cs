@@ -88,6 +88,9 @@ namespace TriangleSelection
 
             vLabel.Content = ballV;
             uLabel.Content = ballU;
+            BLabel.Content = Math.Round(ballU*100, 0);
+            CLabel.Content = Math.Round(ballV*100, 0);
+            ALabel.Content = Math.Round((1 - ballU - ballV)*100, 0);
 
             if (u < 0 || v < 0 || u + v > 1)
             {
@@ -122,14 +125,14 @@ namespace TriangleSelection
                 {
                     //if (ballV < Double.Epsilon) return;
                     Ball.SetValue(Canvas.TopProperty, y - 15);
-                    var x1 = y*_v1.X/_v1.Y + _b.X + 4.999;
+                    var x1 = y*_v1.X/_v1.Y + _b.X + 100.999; //4.99
                     Ball.SetValue(Canvas.LeftProperty, x1);
                 }
                 else if (v < 0)
                 {
                     //if (ballU < Double.Epsilon) return;
                     Ball.SetValue(Canvas.TopProperty, y - 15);
-                    var x1 = y * _v0.X / _v0.Y +_c.X - 34.99;
+                    var x1 = y * _v0.X / _v0.Y +_c.X - 130.99;
                     Ball.SetValue(Canvas.LeftProperty, x1);
                 }
             }
@@ -140,6 +143,8 @@ namespace TriangleSelection
             }
             mouseTopLabel.Content = y;
             mouseLeftLabel.Content = x;
+
+           
         }
 
         private void GetUV(Point p, out double u, out double v)

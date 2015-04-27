@@ -6,7 +6,7 @@
         Title="MainWindow" Height="350" Width="797.881">
     <Canvas Name="Container" MouseMove="Container_OnMouseMove">
         <Polygon x:Name="Triangle"
-            Points="200,100 100,225 300,225 200,100"
+            Points="170,50 20,275 320,275 170,50"
             
             Stroke="Purple" 
             StrokeThickness="2">
@@ -21,7 +21,7 @@
           Height="30"
           Width="30"
           StrokeThickness="1"
-          Stroke="#FF0000FF" RenderTransformOrigin="0.389,-4.256" Canvas.Left="184" Canvas.Top="150"  >
+          Stroke="#FF0000FF" RenderTransformOrigin="0.389,-4.256" Canvas.Left="157" Canvas.Top="168"  >
             <!--<i:Interaction.Behaviors>
                 <ei:MouseDragElementBehavior Dragging="MouseDragElementBehavior_OnDragging" DragFinished="MouseDragElementBehavior_OnDragFinished"/>
             </i:Interaction.Behaviors>-->
@@ -36,6 +36,12 @@
         <Label x:Name="wLabel" Content="Left" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="439" Canvas.Top="119"/>
         <Label Content="u" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="342" Canvas.Top="150"/>
         <Label x:Name="uLabel" Content="Left" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="439" Canvas.Top="150"/>
+        <Label Content="A" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="341" Canvas.Top="181"/>
+        <Label Content="B" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="343" Canvas.Top="212"/>
+        <Label Content="C" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="343" Canvas.Top="243"/>
+        <Label x:Name="ALabel" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="439" Canvas.Top="189" Width="70"/>
+        <Label x:Name="BLabel" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="439" Canvas.Top="220" Width="70"/>
+        <Label x:Name="CLabel" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="439" Canvas.Top="250" Width="70"/>
 
     </Canvas>
 </Window>
